@@ -2,8 +2,7 @@
 
 **Product:** SimpleTodo  
 **Sprint Type:** Sprint 0 (Initial Planning)  
-**Planning Date:** 2nd February, 2026  
-**Document Owner:** Product Owner
+**Planning Date:** 22nd January, 2026  
 
 ---
 
