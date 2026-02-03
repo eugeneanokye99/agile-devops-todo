@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { getTasks, createTask } from './api'
+import { getTasks, createTask, updateTask } from './api'
 
 describe('API Service', () => {
   beforeEach(() => {
@@ -68,6 +68,40 @@ describe('API Service', () => {
       )
 
       await expect(createTask('New Task')).rejects.toThrow('Failed to create task')
+    })
+  })
+
+  describe('updateTask', () => {
+    it('updates task successfully', async () => {
+      const mockTask = { id: 1, title: 'Task', completed: true }
+
+      global.fetch = vi.fn(() =>
+        Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve(mockTask)
+        })
+      )
+
+      const task = await updateTask(1, true)
+
+      expect(fetch).toHaveBeenCalledWith('http://localhost:8000/api/tasks/1', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ completed: true }),
+      })
+      expect(task).toEqual(mockTask)
+    })
+
+    it('throws error when update fails', async () => {
+      global.fetch = vi.fn(() =>
+        Promise.resolve({
+          ok: false
+        })
+      )
+
+      await expect(updateTask(1, true)).rejects.toThrow('Failed to update task')
     })
   })
 })
