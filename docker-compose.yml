@@ -22,7 +22,9 @@ services:
       DATABASE_URL: postgresql://postgres:postgres@database:5432/simpletodo
     depends_on:
       - database
-
+    volumes:
+        - ./backend/logs:/app/logs
+        
   frontend:
     build: ./frontend
     container_name: simpletodo-frontend
