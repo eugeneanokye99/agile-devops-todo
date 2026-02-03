@@ -1,20 +1,3 @@
-# US-002: Task 6 - Documentation, Testing, and Logging
-
-We will complete this in three parts with separate commits.
-
----
-
-## Part A: Document API Endpoint in README
-
-### Step 1: Create README.md in project root
-
-```bash
-cd simpletodo
-```
-
-Create a file named `README.md`:
-
-```markdown
 # SimpleTodo
 
 A simple and intuitive Todo application that allows users to create, update, and delete tasks while demonstrating Agile and DevOps best practices.
