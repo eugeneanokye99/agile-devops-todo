@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app import database
 from app.routers import tasks
 from app.logging_config import logger
+from app.middleware import log_request_time
 
 app = FastAPI(title="SimpleTodo API")
 
@@ -22,6 +23,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.middleware("http")(log_request_time)
 
 app.include_router(tasks.router)
 

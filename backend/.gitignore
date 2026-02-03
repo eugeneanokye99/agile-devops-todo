@@ -3,3 +3,4 @@ venv
 # Logs
 backend/logs/
 *.log
+*.pytest_cache/
