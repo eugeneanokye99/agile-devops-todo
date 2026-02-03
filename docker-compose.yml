@@ -12,6 +12,11 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   backend:
     build: ./backend
@@ -21,8 +26,11 @@ services:
     environment:
       DATABASE_URL: postgresql://postgres:postgres@database:5432/simpletodo
     depends_on:
-      - database
-
+      database:
+        condition: service_healthy
+    volumes:
+        - ./backend/logs:/app/logs
+        
   frontend:
     build: ./frontend
     container_name: simpletodo-frontend
