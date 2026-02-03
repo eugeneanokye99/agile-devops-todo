@@ -122,3 +122,29 @@ h1 {
   text-decoration: line-through;
   color: #888;
 }
+
+.error-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  color: #721c24;
+}
+
+.error-dismiss {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #721c24;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 12px;
+}
+
+.error-dismiss:hover {
+  color: #491217;
+}
