@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import TaskList from "./components/TaskList";
 import TaskForm from "./components/TaskForm";
-import { getTasks, createTask } from "./services/api";
+import { getTasks, createTask, updateTask } from "./services/api";
 import "./App.css";
 
 function App() {
@@ -32,6 +32,17 @@ function App() {
     return newTask;
   }
 
+  async function handleToggleComplete(taskId, completed) {
+    try {
+      const updatedTask = await updateTask(taskId, completed);
+      setTasks(tasks.map((task) =>
+        task.id === taskId ? updatedTask : task
+      ));
+    } catch (err) {
+      setError("Failed to update task");
+    }
+  }
+
   if (loading) {
     return <div className="container">Loading...</div>;
   }
@@ -44,7 +55,7 @@ function App() {
     <div className="container">
       <h1>SimpleTodo</h1>
       <TaskForm onTaskAdded={handleTaskAdded} />
-      <TaskList tasks={tasks} />
+      <TaskList tasks={tasks} onToggleComplete={handleToggleComplete} />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 from pydantic import BaseModel, field_validator
 from datetime import datetime
+from typing import Optional
 
 class TaskCreate(BaseModel):
     title: str
@@ -10,6 +11,9 @@ class TaskCreate(BaseModel):
         if not v or not v.strip():
             raise ValueError('Title cannot be empty or whitespace only')
         return v.strip()
+    
+class TaskUpdate(BaseModel):
+    completed: bool
     
 class TaskResponse(BaseModel):
     id: int
