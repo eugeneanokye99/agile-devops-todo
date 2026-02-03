@@ -1,10 +1,10 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
 import TaskForm from './TaskForm'
 
 describe('TaskForm', () => {
-  beforeEach(() => {
-    vi.useFakeTimers()
+  afterEach(() => {
+    vi.restoreAllMocks()
   })
 
   it('renders input field and button', () => {
@@ -142,6 +142,7 @@ describe('TaskForm', () => {
   })
 
   it('hides success message after 3 seconds', async () => {
+    vi.useFakeTimers()
     const mockOnTaskAdded = vi.fn().mockResolvedValue({})
     render(<TaskForm onTaskAdded={mockOnTaskAdded} />)
     
@@ -149,17 +150,19 @@ describe('TaskForm', () => {
     const button = screen.getByRole('button', { name: 'Add Task' })
     
     fireEvent.change(input, { target: { value: 'New Task' } })
-    fireEvent.click(button)
-    
-    await waitFor(() => {
-      expect(screen.getByText('Task added successfully')).toBeInTheDocument()
+    await act(async () => {
+      fireEvent.click(button)
+      await Promise.resolve()
     })
     
-    vi.advanceTimersByTime(3000)
+    expect(screen.getByText('Task added successfully')).toBeInTheDocument()
     
-    await waitFor(() => {
-      expect(screen.queryByText('Task added successfully')).not.toBeInTheDocument()
+    act(() => {
+      vi.advanceTimersByTime(3000)
     })
+    
+    expect(screen.queryByText('Task added successfully')).not.toBeInTheDocument()
+    vi.useRealTimers()
   })
 
   it('shows error message when task creation fails', async () => {
@@ -170,10 +173,11 @@ describe('TaskForm', () => {
     const button = screen.getByRole('button', { name: 'Add Task' })
     
     fireEvent.change(input, { target: { value: 'New Task' } })
-    fireEvent.click(button)
-    
-    await waitFor(() => {
-      expect(screen.getByText('Failed to add task')).toBeInTheDocument()
+    await act(async () => {
+      fireEvent.click(button)
+      await Promise.resolve()
     })
+    
+    expect(screen.getByText('Failed to add task')).toBeInTheDocument()
   })
 })
