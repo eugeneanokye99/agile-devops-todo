@@ -268,89 +268,121 @@ All acceptance criteria met. Toggle functionality working. Visual styling applie
 
 ## Sprint Retrospective
 
+
 ### What Went Well
 
-**Process Execution:**
-- Daily stand-up discipline maintained consistently throughout sprint
-- All sprint artifacts kept current and accurate
-- Mid-sprint check-in provided valuable progress validation
+#### Process Execution
+- All committed user stories completed successfully
+- Sprint goal fully achieved (100% completion rate)
 - Definition of Done applied consistently to all stories
+- Separate commits for implementation and tests maintained discipline
+- Feature branch workflow worked smoothly
+- CI/CD pipeline caught issues early
 
-**Technical Execution:**
-- Environment setup completed efficiently
-- Database schema design supports all planned features
-- API design patterns established for consistent development
-- React component structure is clean and maintainable
-- Docker containerization working smoothly
-- No significant technical blockers encountered
+#### Technical Execution
+- Docker setup simplified environment management
+- Database schema design supported all Sprint 1 requirements
+- API patterns established consistency across endpoints
+- React component structure remained clean and maintainable
+- Test coverage comprehensive (backend pytest and frontend Vitest)
+- Logging provided valuable debugging information
 
-**Sprint Outcomes:**
-- All committed stories completed on schedule
-- Sprint goal fully achieved
-- Velocity baseline established at 8 points
-- Quality standards maintained throughout
+#### Documentation
+- README kept current with each feature
+- TESTING.md documented manual test results
+- API endpoints clearly documented
+- Commit messages were descriptive and followed convention
+
+---
 
 ### What Could Be Improved
 
-**Process Observations:**
-- Acceptance criteria could be more specific about edge cases
-- Daily stand-up format could be streamlined
-- Burndown chart granularity limited to story completion
+#### Process Observations
 
-**Technical Observations:**
-- Docker networking required brief troubleshooting
-- Database migration setup took longer than anticipated
-- Some edge cases discovered during implementation rather than planning
+**Issue 1: Task granularity inconsistency**
+Some tasks were very granular (separate commits for implementation and tests) while others combined multiple changes. This made it harder to track progress at the task level.
 
-### Action Items for Sprint 2
+**Issue 2: No automated integration tests**
+While unit tests exist, there are no end-to-end tests that verify the full user workflow from frontend through backend to database.
 
-**Process Improvements:**
-- Review acceptance criteria more thoroughly during planning to identify edge cases
-- Consider tracking task completion for more granular progress visibility
-- Streamline daily updates while maintaining visibility
+**Issue 3: Manual testing documentation is time-consuming**
+Updating TESTING.md manually after each feature adds overhead and is easy to forget.
 
-**Technical Improvements:**
-- Document Docker networking configuration for reference
-- Establish database migration best practices
-- Add error handling as explicit acceptance criteria
+**Issue 4: No performance baseline**
+We haven't measured API response times or frontend rendering performance. This could become important as the application grows.
 
-**Capacity Planning:**
-- Sprint 2 commits to 10 story points based on demonstrated 8-point velocity
-- Additional 2 points justified by eliminated setup overhead
-- Monitor progress to ensure sustainable pace
+**Issue 5: Error handling inconsistency**
+Frontend error handling exists but isn't consistent across all components. Some errors display to users, others only log to console.
 
 ---
 
-## Sprint 1 Summary
+## Action Items for Sprint 2
 
-**Sprint Goal Achievement:** Fully achieved. All committed stories completed and sprint goal met.
+Based on the retrospective, here are concrete improvements to implement:
 
-**Key Deliverables:**
-- Functional task list display with empty state
-- Task creation with validation and user feedback
-- Task completion toggle with visual styling and persistence
-- Established end-to-end architecture (React, FastAPI, PostgreSQL, Docker)
-- Documented API endpoints
-- Baseline velocity of 8 story points
-
-**Lessons Learned:**
-- Conservative first sprint estimate proved accurate
-- Environment setup overhead was manageable
-- Daily discipline provides valuable visibility
-- Definition of Done standards are achievable and effective
-- Quality focus prevents technical debt accumulation
-
-**Sprint 2 Preparation:**
-- Backlog refined with three committed stories (10 points)
-- Velocity baseline established and validated
-- Technical foundation solid for additional features
-- Process improvements identified
-
-**Overall Assessment:**  
-Sprint 1 successfully delivered a functional task management foundation. All committed work completed, sprint goal achieved, and quality standards maintained. The established process discipline and technical architecture provide a solid foundation for Sprint 2 to complete the remaining features and deliver a fully functional Todo application.
+### Action Item 1: Add End-to-End Tests
+**Problem:** No automated tests verify complete user workflows  
+**Solution:** Add Playwright or Cypress for E2E testing  
+**Implementation:** Create E2E tests for core workflows (add task, complete task, view tasks)  
+**Success Criteria:** At least one E2E test per user story in Sprint 2
 
 ---
 
-**Document Status:** Final  
-**Sprint Velocity:** 8 story points  
-**Next Sprint:** Sprint 2 Planning
+### Action Item 2: Standardize Error Handling
+**Problem:** Inconsistent error handling across frontend components  
+**Solution:** Create reusable error handling hook or component  
+**Implementation:** Add `useError` hook or `ErrorBoundary` component  
+**Success Criteria:** All Sprint 2 features use consistent error handling pattern
+
+---
+
+### Action Item 3: Add API Response Time Logging
+**Problem:** No performance baseline established  
+**Solution:** Add middleware to log API response times  
+**Implementation:** Create FastAPI middleware to measure and log request duration  
+**Success Criteria:** All API endpoints log response times in milliseconds
+
+---
+
+### Action Item 4: Improve Task Breakdown Documentation
+**Problem:** Task granularity inconsistent  
+**Solution:** Document task breakdown in sprint planning with estimated time  
+**Implementation:** Add task checklist to each user story branch  
+**Success Criteria:** Each user story has clear task breakdown before implementation starts
+
+---
+
+## Sprint 2 Commitments
+
+Based on Sprint 1 velocity (8 points) and identified improvements:
+
+**Capacity:** 10 story points
+- Sprint 1 velocity: 8 points
+- Additional 2 points justified by:
+  - No environment setup overhead
+  - Established patterns and components
+  - Improved process from retrospective
+
+**Process Improvements to Apply:**
+- Add E2E testing framework and tests
+- Standardize error handling
+- Add API performance logging
+- Improve task breakdown documentation
+
+**Focus Areas:**
+- Complete remaining CRUD operations (Delete, Edit)
+- Add filtering functionality
+- Maintain quality while increasing velocity
+- Apply all retrospective improvements
+
+---
+
+## Sprint 2 Backlog
+
+**Committed Stories:**
+- US-004: Delete Task (2 points)
+- US-006: Filter Tasks by Status (3 points)
+- US-005: Edit Task Title (5 points)
+
+**Total:** 10 story points
+

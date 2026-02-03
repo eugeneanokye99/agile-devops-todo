@@ -38,6 +38,7 @@ docker-compose up --build
 |--------|----------|-------------|
 | GET | /api/tasks/ | Retrieve all tasks |
 | POST | /api/tasks/ | Create a new task |
+| PATCH | /api/tasks/{id} | Update task completion status |
 
 ### GET /api/tasks/
 
@@ -96,5 +97,40 @@ Creates a new task.
       "type": "value_error"
     }
   ]
+}
+```
+
+### PATCH /api/tasks/{id}
+
+Updates the completion status of a task.
+
+**Path Parameters:**
+
+- `id` (integer): The ID of the task to update
+
+**Request Body:**
+
+```json
+{
+  "completed": true
+}
+```
+
+**Success Response (200 OK):**
+
+```json
+{
+  "id": 1,
+  "title": "Task title",
+  "completed": true,
+  "created_at": "2025-01-15T10:30:00Z"
+}
+```
+
+**Error Response (404 Not Found):**
+
+```json
+{
+  "detail": "Task not found"
 }
 ```
