@@ -69,4 +69,49 @@ describe('TaskForm', () => {
     
     expect(mockOnTaskAdded).toHaveBeenCalledWith('New Task')
   })
+
+  it('shows error message when submitting empty title', () => {
+    render(<TaskForm onTaskAdded={() => {}} />)
+    
+    const button = screen.getByRole('button', { name: 'Add Task' })
+    fireEvent.click(button)
+    
+    expect(screen.getByText('Task title cannot be empty')).toBeInTheDocument()
+  })
+
+  it('shows error message when submitting whitespace only title', () => {
+    render(<TaskForm onTaskAdded={() => {}} />)
+    
+    const input = screen.getByPlaceholderText('Enter a new task...')
+    const button = screen.getByRole('button', { name: 'Add Task' })
+    
+    fireEvent.change(input, { target: { value: '   ' } })
+    fireEvent.click(button)
+    
+    expect(screen.getByText('Task title cannot be empty')).toBeInTheDocument()
+  })
+
+  it('clears error message when user starts typing', () => {
+    render(<TaskForm onTaskAdded={() => {}} />)
+    
+    const input = screen.getByPlaceholderText('Enter a new task...')
+    const button = screen.getByRole('button', { name: 'Add Task' })
+    
+    fireEvent.click(button)
+    expect(screen.getByText('Task title cannot be empty')).toBeInTheDocument()
+    
+    fireEvent.change(input, { target: { value: 'N' } })
+    expect(screen.queryByText('Task title cannot be empty')).not.toBeInTheDocument()
+  })
+
+  it('applies error styling to input when validation fails', () => {
+    render(<TaskForm onTaskAdded={() => {}} />)
+    
+    const input = screen.getByPlaceholderText('Enter a new task...')
+    const button = screen.getByRole('button', { name: 'Add Task' })
+    
+    fireEvent.click(button)
+    
+    expect(input).toHaveClass('input-error')
+  })
 })
