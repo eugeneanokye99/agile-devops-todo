@@ -37,6 +37,7 @@ docker-compose up --build
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | /api/tasks/ | Retrieve all tasks |
+| POST | /api/tasks/ | Create a new task |
 
 ### GET /api/tasks/
 
@@ -59,4 +60,41 @@ Retrieves all tasks ordered by creation date.
 
 ```json
 []
+```
+
+### POST /api/tasks/
+
+Creates a new task.
+
+**Request Body:**
+
+```json
+{
+  "title": "Task title"
+}
+```
+
+**Success Response (201 Created):**
+
+```json
+{
+  "id": 1,
+  "title": "Task title",
+  "completed": false,
+  "created_at": "2025-01-15T10:30:00Z"
+}
+```
+
+**Error Response (422 Unprocessable Entity):**
+
+```json
+{
+  "detail": [
+    {
+      "loc": ["body", "title"],
+      "msg": "Title cannot be empty or whitespace only",
+      "type": "value_error"
+    }
+  ]
+}
 ```
