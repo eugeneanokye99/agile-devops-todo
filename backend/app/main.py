@@ -1,11 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.database import engine, Base
+from app import database
 from app.routers import tasks
 
-Base.metadata.create_all(bind=engine)
-
 app = FastAPI(title="SimpleTodo API")
+
+@app.on_event("startup")
+def startup():
+    database.Base.metadata.create_all(bind=database.engine)
 
 app.add_middleware(
     CORSMiddleware,
