@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import TaskList from "./components/TaskList";
-import { getTasks } from "./services/api";
+import TaskForm from "./components/TaskForm";
+import { getTasks, createTask } from "./services/api";
 import "./App.css";
 
 function App() {
@@ -25,6 +26,12 @@ function App() {
     }
   }
 
+  async function handleTaskAdded(title) {
+    const newTask = await createTask(title);
+    setTasks([...tasks, newTask]);
+    return newTask;
+  }
+
   if (loading) {
     return <div className="container">Loading...</div>;
   }
@@ -36,6 +43,7 @@ function App() {
   return (
     <div className="container">
       <h1>SimpleTodo</h1>
+      <TaskForm onTaskAdded={handleTaskAdded} />
       <TaskList tasks={tasks} />
     </div>
   );

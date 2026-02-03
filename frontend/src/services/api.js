@@ -7,3 +7,17 @@ export async function getTasks() {
   }
   return response.json();
 }
+
+export async function createTask(title) {
+  const response = await fetch(`${API_URL}/tasks/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ title }),
+  });
+  if (!response.ok) {
+    throw new Error("Failed to create task");
+  }
+  return response.json();
+}
