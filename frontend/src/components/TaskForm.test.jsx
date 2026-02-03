@@ -1,8 +1,12 @@
-import { describe, it, expect, vi } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import TaskForm from './TaskForm'
 
 describe('TaskForm', () => {
+  beforeEach(() => {
+    vi.useFakeTimers()
+  })
+
   it('renders input field and button', () => {
     render(<TaskForm onTaskAdded={() => {}} />)
     
@@ -10,8 +14,8 @@ describe('TaskForm', () => {
     expect(screen.getByRole('button', { name: 'Add Task' })).toBeInTheDocument()
   })
 
-  it('calls onTaskAdded with trimmed title on submit', () => {
-    const mockOnTaskAdded = vi.fn()
+  it('calls onTaskAdded with trimmed title on submit', async () => {
+    const mockOnTaskAdded = vi.fn().mockResolvedValue({})
     render(<TaskForm onTaskAdded={mockOnTaskAdded} />)
     
     const input = screen.getByPlaceholderText('Enter a new task...')
@@ -20,11 +24,14 @@ describe('TaskForm', () => {
     fireEvent.change(input, { target: { value: '  New Task  ' } })
     fireEvent.click(button)
     
-    expect(mockOnTaskAdded).toHaveBeenCalledWith('New Task')
+    await waitFor(() => {
+      expect(mockOnTaskAdded).toHaveBeenCalledWith('New Task')
+    })
   })
 
-  it('clears input after successful submission', () => {
-    render(<TaskForm onTaskAdded={() => {}} />)
+  it('clears input after successful submission', async () => {
+    const mockOnTaskAdded = vi.fn().mockResolvedValue({})
+    render(<TaskForm onTaskAdded={mockOnTaskAdded} />)
     
     const input = screen.getByPlaceholderText('Enter a new task...')
     const button = screen.getByRole('button', { name: 'Add Task' })
@@ -32,7 +39,9 @@ describe('TaskForm', () => {
     fireEvent.change(input, { target: { value: 'New Task' } })
     fireEvent.click(button)
     
-    expect(input.value).toBe('')
+    await waitFor(() => {
+      expect(input.value).toBe('')
+    })
   })
 
   it('does not call onTaskAdded with empty title', () => {
@@ -58,8 +67,8 @@ describe('TaskForm', () => {
     expect(mockOnTaskAdded).not.toHaveBeenCalled()
   })
 
-  it('submits form on Enter key press', () => {
-    const mockOnTaskAdded = vi.fn()
+  it('submits form on Enter key press', async () => {
+    const mockOnTaskAdded = vi.fn().mockResolvedValue({})
     render(<TaskForm onTaskAdded={mockOnTaskAdded} />)
     
     const input = screen.getByPlaceholderText('Enter a new task...')
@@ -67,7 +76,9 @@ describe('TaskForm', () => {
     fireEvent.change(input, { target: { value: 'New Task' } })
     fireEvent.submit(input.closest('form'))
     
-    expect(mockOnTaskAdded).toHaveBeenCalledWith('New Task')
+    await waitFor(() => {
+      expect(mockOnTaskAdded).toHaveBeenCalledWith('New Task')
+    })
   })
 
   it('shows error message when submitting empty title', () => {
@@ -113,5 +124,56 @@ describe('TaskForm', () => {
     fireEvent.click(button)
     
     expect(input).toHaveClass('input-error')
+  })
+
+  it('shows success message after task is added', async () => {
+    const mockOnTaskAdded = vi.fn().mockResolvedValue({})
+    render(<TaskForm onTaskAdded={mockOnTaskAdded} />)
+    
+    const input = screen.getByPlaceholderText('Enter a new task...')
+    const button = screen.getByRole('button', { name: 'Add Task' })
+    
+    fireEvent.change(input, { target: { value: 'New Task' } })
+    fireEvent.click(button)
+    
+    await waitFor(() => {
+      expect(screen.getByText('Task added successfully')).toBeInTheDocument()
+    })
+  })
+
+  it('hides success message after 3 seconds', async () => {
+    const mockOnTaskAdded = vi.fn().mockResolvedValue({})
+    render(<TaskForm onTaskAdded={mockOnTaskAdded} />)
+    
+    const input = screen.getByPlaceholderText('Enter a new task...')
+    const button = screen.getByRole('button', { name: 'Add Task' })
+    
+    fireEvent.change(input, { target: { value: 'New Task' } })
+    fireEvent.click(button)
+    
+    await waitFor(() => {
+      expect(screen.getByText('Task added successfully')).toBeInTheDocument()
+    })
+    
+    vi.advanceTimersByTime(3000)
+    
+    await waitFor(() => {
+      expect(screen.queryByText('Task added successfully')).not.toBeInTheDocument()
+    })
+  })
+
+  it('shows error message when task creation fails', async () => {
+    const mockOnTaskAdded = vi.fn().mockRejectedValue(new Error('Failed'))
+    render(<TaskForm onTaskAdded={mockOnTaskAdded} />)
+    
+    const input = screen.getByPlaceholderText('Enter a new task...')
+    const button = screen.getByRole('button', { name: 'Add Task' })
+    
+    fireEvent.change(input, { target: { value: 'New Task' } })
+    fireEvent.click(button)
+    
+    await waitFor(() => {
+      expect(screen.getByText('Failed to add task')).toBeInTheDocument()
+    })
   })
 })
