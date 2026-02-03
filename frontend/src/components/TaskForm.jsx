@@ -4,7 +4,7 @@ function TaskForm({ onTaskAdded }) {
   const [title, setTitle] = useState("");
   const [error, setError] = useState("");
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     
     const trimmedTitle = title.trim();
@@ -14,8 +14,15 @@ function TaskForm({ onTaskAdded }) {
     }
     
     setError("");
-    onTaskAdded(trimmedTitle);
-    setTitle("");
+
+    try {
+      await onTaskAdded(trimmedTitle);
+      setTitle("");
+      setSuccess("Task added successfully");
+      setTimeout(() => setSuccess(""), 3000);
+    } catch (err) {
+      setError("Failed to add task");
+    }
   }
 
   function handleChange(e) {
@@ -36,6 +43,7 @@ function TaskForm({ onTaskAdded }) {
           onChange={handleChange}
         />
         {error && <span className="error-message">{error}</span>}
+        {success && <span className="success-message">{success}</span>}
       </div>
       <button type="submit" className="task-button">
         Add Task

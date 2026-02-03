@@ -90,3 +90,9 @@ h1 {
   font-size: 12px;
   margin-top: 4px;
 }
+
+.success-message {
+  color: #28a745;
+  font-size: 12px;
+  margin-top: 4px;
+}

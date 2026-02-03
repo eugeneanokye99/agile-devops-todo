@@ -27,12 +27,9 @@ function App() {
   }
 
   async function handleTaskAdded(title) {
-    try {
-      const newTask = await createTask(title);
-      setTasks([...tasks, newTask]);
-    } catch (err) {
-      setError("Failed to add task");
-    }
+    const newTask = await createTask(title);
+    setTasks([...tasks, newTask]);
+    return newTask;
   }
 
   if (loading) {
