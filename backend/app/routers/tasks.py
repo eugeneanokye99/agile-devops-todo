@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from backend.app.db.database import get_db
+from app.db.database import get_db
 from app.models.task import Task
 from app.schemas.task import TaskCreate, TaskUpdate, TaskResponse
-from backend.app.logging.logging_config import logger
+from app.logging.logging_config import logger
 
 router = APIRouter(prefix="/api/tasks", tags=["tasks"])
 
