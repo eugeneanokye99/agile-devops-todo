@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app import database
+from backend.app.db import database
 from app.routers import tasks
-from app.logging_config import logger
-from app.middleware import log_request_time
+from backend.app.logging.logging_config import logger
+from backend.app.middleware.middleware import log_request_time
 
 app = FastAPI(title="SimpleTodo API")
 

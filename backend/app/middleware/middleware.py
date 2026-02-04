@@ -1,6 +1,6 @@
 import time
 from fastapi import Request
-from app.logging_config import logger
+from backend.app.logging.logging_config import logger
 
 async def log_request_time(request: Request, call_next):
     start_time = time.time()
