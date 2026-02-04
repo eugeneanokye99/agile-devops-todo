@@ -134,3 +134,39 @@
 - Task counts update dynamically
 - Session storage preserves filter preference
 - Filter does not affect underlying task data
+
+
+---
+
+## US-005: Edit Task Title - Testing
+
+**Date:** 3rd Februaury, 2026
+**Tester:** Eugene Anokye
+
+### Test Environment
+- Frontend: http://localhost:5173
+- Backend: http://localhost:8000
+- Database: PostgreSQL 15
+
+### Test Results
+
+| Test Case | Status |
+|-----------|--------|
+| Double-click enters edit mode | ✓ |
+| Edit input displays with current title | ✓ |
+| Save button saves changes | ✓ |
+| Cancel button cancels editing | ✓ |
+| Enter key saves changes | ✓ |
+| Escape key cancels editing | ✓ |
+| Empty title validation | ✓ |
+| Whitespace-only title validation | ✓ |
+| Completion status preserved during edit | ✓ |
+| Edited title persists after page reload | ✓ |
+| Only one task editable at a time | ✓ |
+
+### Notes
+- All edit scenarios work correctly
+- Keyboard shortcuts (Enter/Escape) function as expected
+- Validation prevents empty titles
+- Completion status preserved during editing
+- Only one task can be in edit mode at a time
