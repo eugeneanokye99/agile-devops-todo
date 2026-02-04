@@ -35,3 +35,12 @@ export async function updateTask(taskId, completed) {
   }
   return response.json();
 }
+
+export async function deleteTask(taskId) {
+  const response = await fetch(`${API_URL}/tasks/${taskId}`, {
+    method: "DELETE",
+  });
+  if (!response.ok) {
+    throw new Error("Failed to delete task");
+  }
+}

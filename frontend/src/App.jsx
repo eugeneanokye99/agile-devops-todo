@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import TaskList from "./components/TaskList";
 import TaskForm from "./components/TaskForm";
 import ErrorMessage from "./components/ErrorMessage";
-import { getTasks, createTask, updateTask } from "./services/api";
+import { getTasks, createTask, updateTask, deleteTask } from "./services/api";
 import { useError } from "./hooks/useError";
 import "./App.css";
 
@@ -52,6 +52,16 @@ function App() {
     }
   }
 
+  async function handleDelete(taskId) {
+    try {
+      await deleteTask(taskId);
+      setTasks(tasks.filter((task) => task.id !== taskId));
+      clearError();
+    } catch (err) {
+      handleError(err, "Failed to delete task");
+    }
+  }
+
   if (loading) {
     return <div className="container">Loading...</div>;
   }
@@ -61,7 +71,11 @@ function App() {
       <h1>SimpleTodo</h1>
       <ErrorMessage message={error} onDismiss={clearError} />
       <TaskForm onTaskAdded={handleTaskAdded} />
-      <TaskList tasks={tasks} onToggleComplete={handleToggleComplete} />
+      <TaskList 
+        tasks={tasks} 
+        onToggleComplete={handleToggleComplete}
+        onDelete={handleDelete}
+      />
     </div>
   );
 }

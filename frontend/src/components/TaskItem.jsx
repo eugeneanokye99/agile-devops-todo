@@ -1,6 +1,10 @@
-function TaskItem({ task, onToggleComplete }) {
+function TaskItem({ task, onToggleComplete, onDelete }) {
   function handleToggle() {
     onToggleComplete(task.id, !task.completed);
+  }
+
+  function handleDelete() {
+    onDelete(task.id);
   }
 
   return (
@@ -14,6 +18,9 @@ function TaskItem({ task, onToggleComplete }) {
       <span className={task.completed ? "task-title completed" : "task-title"}>
         {task.title}
       </span>
+      <button className="delete-button" onClick={handleDelete}>
+        Delete
+      </button>
     </li>
   );
 }
