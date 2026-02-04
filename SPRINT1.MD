@@ -1,6 +1,5 @@
 # SPRINT 1
 
-**Sprint Duration:** 2 weeks  
 **Sprint Goal:** Deliver a functional task management foundation that allows users to add and view tasks, establishing the core data flow and user interface patterns for future sprint work.
 
 ---
@@ -105,10 +104,9 @@ As a user, I want to mark a task as complete so that I can track my progress and
 
 ## Sprint Execution Log
 
-### Week 1 - Early Sprint
+### Early Sprint
 
 **Completed Work:**
-- Sprint planning session conducted
 - Development environment initialized
 - Project repository created with initial structure
 - Docker configuration files created for frontend and backend services
@@ -118,6 +116,18 @@ As a user, I want to mark a task as complete so that I can track my progress and
 - FastAPI project structure established
 - Database connection configuration completed
 - Initial React components structure created
+
+### Development Environment Setup
+
+#### Docker Compose
+![Docker Compose Up](./screenshots/docker.png)
+*All three services (database, backend, frontend) running successfully*
+
+**Services Running:**
+- PostgreSQL Database on port 5432
+- FastAPI Backend on port 8000
+- React Frontend on port 5173
+
 
 **US-002 Progress:**
 - API endpoint for retrieving tasks created and tested
@@ -138,9 +148,10 @@ As a user, I want to mark a task as complete so that I can track my progress and
 
 **Burndown Update:** 6 story points remaining
 
+
 ---
 
-### Week 1 - Mid-Sprint
+### Mid-Sprint
 
 **Completed Work:**
 - API endpoint for adding tasks created
@@ -170,7 +181,7 @@ As a user, I want to mark a task as complete so that I can track my progress and
 
 ---
 
-### Week 2 - Late Sprint
+### Late Sprint
 
 **Completed Work:**
 - Database schema updated with completion status field
@@ -224,6 +235,11 @@ All acceptance criteria met. Task creation functional with validation. User feed
 **US-003: Mark Task as Complete** ✓  
 All acceptance criteria met. Toggle functionality working. Visual styling applied. Status persistence verified across page refreshes.
 
+**Screenshots:**
+#### Empty State
+![Empty State](./screenshots//empty_state.png)
+*Application displays "No tasks yet" message when task list is empty*
+
 ### Sprint Metrics
 
 - **Planned Story Points:** 8
@@ -264,6 +280,10 @@ All acceptance criteria met. Toggle functionality working. Visual styling applie
 
 **Rationale:** Slightly higher commitment justified by established velocity and reduced setup overhead.
 
+**Process Improvements Planned:**
+- Add E2E testing with Playwright
+- Standardize error handling with useError hook
+- Add API response time logging
 ---
 
 ## Sprint Retrospective

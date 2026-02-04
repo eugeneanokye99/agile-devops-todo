@@ -1,6 +1,5 @@
 # SPRINT 2
 
-**Sprint Duration:** 2 weeks  
 **Sprint Goal:** Complete all remaining product backlog items and implement process improvements identified in Sprint 1, delivering a fully functional Todo application.
 
 ---
@@ -12,21 +11,27 @@
 - **Sprint 2 Capacity:** 10 points
 - **Rationale:** Increased capacity justified by eliminated setup overhead, established patterns, and familiarity with codebase.
 
-### Process Improvements from Sprint 1
+## Process Improvements Implementation
 
-The following improvements identified in Sprint 1 retrospective will be applied in Sprint 2:
+Before starting user stories, the following improvements from Sprint 1 retrospective were implemented:
 
-**Improvement 1: Enhanced Acceptance Criteria Review**  
-All acceptance criteria reviewed for edge cases and error scenarios before sprint begins. Error handling added as explicit criteria where applicable.
+### Improvement 1: API Response Time Logging
+- Added middleware to log request duration
+- All API endpoints now log response times in milliseconds
+- **Status:** Implemented ✓
 
-**Improvement 2: Task-Level Progress Tracking**  
-Progress tracked at task level for more granular burndown visibility, especially for larger stories like US-005.
+### Improvement 2: Standardized Error Handling
+- Created `useError` hook for consistent error management
+- Added `ErrorMessage` component for user-facing errors
+- **Status:** Implemented ✓
 
-**Improvement 3: Streamlined Daily Updates**  
-Daily updates focused on substantive progress and blockers. Reduced administrative overhead while maintaining visibility.
+### Improvement 3: End-to-End Testing
+- Added Playwright for E2E testing
+- Created comprehensive E2E tests for all user stories
+- **Status:** Implemented ✓
 
-**Improvement 4: Database Migration Best Practices**  
-Migration approach documented and standardized based on Sprint 1 learnings. Migrations tested before implementation begins.
+---
+
 
 ### Selected User Stories
 
@@ -253,6 +258,23 @@ All acceptance criteria met. All three filter options working correctly. Task co
 
 **US-005: Edit Task Title** ✓  
 All acceptance criteria met. Inline editing working with keyboard shortcuts. Validation prevents empty titles. Completion status preserved. Text overflow handled. Error handling implemented.
+
+**Screenshotes:**
+#### Final Application
+![Final Application](./screenshots/completed.png)
+*Complete application with all features working*
+
+#### Backend Tests Passing
+![Backend Tests](./screenshots/pytest.png)
+*All pytest tests passing (20 tests)*
+
+#### Frontend Tests Passing
+![Frontend Tests](./screenshots/vitest.png)
+*All Vitest tests passing (51 tests)*
+
+#### E2E Tests Passing
+![E2E Tests](./screenshots/e2e.png)
+*All Playwright E2E tests passing (24 tests)*
 
 ### Sprint Metrics
 

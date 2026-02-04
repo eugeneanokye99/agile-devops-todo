@@ -2,6 +2,12 @@
 
 A simple and intuitive Todo application that allows users to create, update, and delete tasks while demonstrating Agile and DevOps best practices.
 
+## 📋 Project Documentation
+
+- [Sprint 1 Documentation](./SPRINT_1.md)
+- [Sprint 2 Documentation](./SPRINT_2.md)
+- [Testing Documentation](./TESTING.md)
+
 ## Tech Stack
 
 - **Frontend:** React with Vite
