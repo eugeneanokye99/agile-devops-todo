@@ -1,10 +1,10 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import TaskList from './TaskList'
 
 describe('TaskList', () => {
   it('displays empty state when no tasks', () => {
-    render(<TaskList tasks={[]} onToggleComplete={() => {}} />)
+    render(<TaskList tasks={[]} onToggleComplete={() => {}} onDelete={() => {}} />)
     
     expect(screen.getByText('No tasks yet')).toBeInTheDocument()
   })
@@ -15,7 +15,7 @@ describe('TaskList', () => {
       { id: 2, title: 'Test Task 2', completed: false }
     ]
     
-    render(<TaskList tasks={tasks} onToggleComplete={() => {}} />)
+    render(<TaskList tasks={tasks} onToggleComplete={() => {}} onDelete={() => {}} />)
     
     expect(screen.getByText('Test Task 1')).toBeInTheDocument()
     expect(screen.getByText('Test Task 2')).toBeInTheDocument()
@@ -26,7 +26,7 @@ describe('TaskList', () => {
       { id: 1, title: 'Completed Task', completed: true }
     ]
     
-    render(<TaskList tasks={tasks} onToggleComplete={() => {}} />)
+    render(<TaskList tasks={tasks} onToggleComplete={() => {}} onDelete={() => {}} />)
     
     const taskText = screen.getByText('Completed Task')
     expect(taskText).toHaveClass('completed')
@@ -39,7 +39,7 @@ describe('TaskList', () => {
       { id: 3, title: 'Third Task', completed: false }
     ]
     
-    render(<TaskList tasks={tasks} onToggleComplete={() => {}} />)
+    render(<TaskList tasks={tasks} onToggleComplete={() => {}} onDelete={() => {}} />)
     
     const taskItems = screen.getAllByRole('listitem')
     expect(taskItems).toHaveLength(3)
@@ -54,9 +54,21 @@ describe('TaskList', () => {
       { id: 2, title: 'Task 2', completed: true }
     ]
     
-    render(<TaskList tasks={tasks} onToggleComplete={() => {}} />)
+    render(<TaskList tasks={tasks} onToggleComplete={() => {}} onDelete={() => {}} />)
     
     const checkboxes = screen.getAllByRole('checkbox')
     expect(checkboxes).toHaveLength(2)
+  })
+
+  it('renders delete button for each task', () => {
+    const tasks = [
+      { id: 1, title: 'Task 1', completed: false },
+      { id: 2, title: 'Task 2', completed: true }
+    ]
+    
+    render(<TaskList tasks={tasks} onToggleComplete={() => {}} onDelete={() => {}} />)
+    
+    const deleteButtons = screen.getAllByRole('button', { name: 'Delete' })
+    expect(deleteButtons).toHaveLength(2)
   })
 })

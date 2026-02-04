@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { getTasks, createTask, updateTask } from './api'
+import { getTasks, createTask, updateTask, deleteTask } from './api'
 
 describe('API Service', () => {
   beforeEach(() => {
@@ -102,6 +102,32 @@ describe('API Service', () => {
       )
 
       await expect(updateTask(1, true)).rejects.toThrow('Failed to update task')
+    })
+  })
+
+  describe('deleteTask', () => {
+    it('deletes task successfully', async () => {
+      global.fetch = vi.fn(() =>
+        Promise.resolve({
+          ok: true
+        })
+      )
+
+      await deleteTask(1)
+
+      expect(fetch).toHaveBeenCalledWith('http://localhost:8000/api/tasks/1', {
+        method: 'DELETE',
+      })
+    })
+
+    it('throws error when delete fails', async () => {
+      global.fetch = vi.fn(() =>
+        Promise.resolve({
+          ok: false
+        })
+      )
+
+      await expect(deleteTask(1)).rejects.toThrow('Failed to delete task')
     })
   })
 })

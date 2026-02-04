@@ -39,6 +39,7 @@ docker-compose up --build
 | GET | /api/tasks/ | Retrieve all tasks |
 | POST | /api/tasks/ | Create a new task |
 | PATCH | /api/tasks/{id} | Update task completion status |
+| DELETE | /api/tasks/{id} | Delete a task |
 
 ### GET /api/tasks/
 
@@ -134,3 +135,25 @@ Updates the completion status of a task.
   "detail": "Task not found"
 }
 ```
+
+
+### DELETE /api/tasks/{id}
+
+Deletes a task permanently.
+
+**Path Parameters:**
+
+- `id` (integer): The ID of the task to delete
+
+**Success Response (204 No Content):**
+
+No response body
+
+**Error Response (404 Not Found):**
+
+```json
+{
+  "detail": "Task not found"
+}
+```
+
