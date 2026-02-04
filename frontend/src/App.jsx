@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import TaskList from "./components/TaskList";
 import TaskForm from "./components/TaskForm";
+import TaskFilter from "./components/TaskFilter";
 import ErrorMessage from "./components/ErrorMessage";
 import { getTasks, createTask, updateTask, deleteTask } from "./services/api";
 import { useError } from "./hooks/useError";
@@ -9,11 +10,18 @@ import "./App.css";
 function App() {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState(() => {
+    return sessionStorage.getItem('taskFilter') || 'all';
+  });
   const { error, handleError, clearError } = useError();
 
   useEffect(() => {
     fetchTasks();
   }, []);
+
+  useEffect(() => {
+    sessionStorage.setItem('taskFilter', filter);
+  }, [filter]);
 
   async function fetchTasks() {
     try {
@@ -62,17 +70,44 @@ function App() {
     }
   }
 
+  function getFilteredTasks() {
+    switch (filter) {
+      case 'active':
+        return tasks.filter(task => !task.completed);
+      case 'completed':
+        return tasks.filter(task => task.completed);
+      default:
+        return tasks;
+    }
+  }
+
+  function getTaskCounts() {
+    return {
+      all: tasks.length,
+      active: tasks.filter(task => !task.completed).length,
+      completed: tasks.filter(task => task.completed).length
+    };
+  }
+
   if (loading) {
     return <div className="container">Loading...</div>;
   }
+
+  const filteredTasks = getFilteredTasks();
+  const taskCounts = getTaskCounts();
 
   return (
     <div className="container">
       <h1>SimpleTodo</h1>
       <ErrorMessage message={error} onDismiss={clearError} />
       <TaskForm onTaskAdded={handleTaskAdded} />
+      <TaskFilter 
+        currentFilter={filter}
+        onFilterChange={setFilter}
+        taskCounts={taskCounts}
+      />
       <TaskList 
-        tasks={tasks} 
+        tasks={filteredTasks} 
         onToggleComplete={handleToggleComplete}
         onDelete={handleDelete}
       />

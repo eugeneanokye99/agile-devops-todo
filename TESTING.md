@@ -2,8 +2,8 @@
 
 ## US-002: View Task List - Cross-Browser Testing
 
-**Date:** [Date]
-**Tester:** [Your Name]
+**Date:** 2nd February, 2026
+**Tester:** Eugene Anokye
 
 ### Test Environment
 - Frontend: http://localhost:5173
@@ -28,8 +28,8 @@
 
 ## US-001: Add New Task - Testing
 
-**Date:** [Date]
-**Tester:** [Your Name]
+**Date:** 2nd February, 2026
+**Tester:** Eugene Anokye
 
 ### Test Results
 
@@ -47,8 +47,8 @@
 
 ## US-003: Mark Task as Complete - Persistence Testing
 
-**Date:** [Date]
-**Tester:** [Your Name]
+**Date:** 2nd February, 2026
+**Tester:** Eugene Anokye
 
 ### Test Environment
 - Frontend: http://localhost:5173
@@ -76,8 +76,8 @@
 
 ## US-004: Delete Task - Deletion Testing
 
-**Date:** [Date]
-**Tester:** [Your Name]
+**Date:** 3rd February, 2026
+**Tester:** Eugene Anokye
 
 ### Test Environment
 - Frontend: http://localhost:5173
@@ -102,3 +102,35 @@
 - Task list updates immediately after deletion
 - Empty state displays correctly when last task deleted
 - Remaining tasks maintain correct order after deletion
+
+---
+
+## US-006: Filter Tasks by Status - Testing
+
+**Date:** 3rd February, 2026
+**Tester:** Eugene Anokye
+
+### Test Environment
+- Frontend: http://localhost:5173
+- Backend: http://localhost:8000
+- Database: PostgreSQL 15
+
+### Test Results
+
+| Test Case | Status |
+|-----------|--------|
+| Three filter buttons display | ✓ |
+| Task counts display correctly | ✓ |
+| Active filter shows only incomplete tasks | ✓ |
+| Completed filter shows only complete tasks | ✓ |
+| All filter shows all tasks | ✓ |
+| Filter preference persists after page reload | ✓ |
+| Switching filters does not modify task data | ✓ |
+| Empty message displays when filter has no results | ✓ |
+| Filter buttons remain accessible | ✓ |
+
+### Notes
+- All filter combinations work correctly
+- Task counts update dynamically
+- Session storage preserves filter preference
+- Filter does not affect underlying task data

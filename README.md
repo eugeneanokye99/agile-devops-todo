@@ -9,6 +9,14 @@ A simple and intuitive Todo application that allows users to create, update, and
 - **Database:** PostgreSQL
 - **Containerization:** Docker
 
+## Features
+
+- **Task Management:** Create, view, complete, and delete tasks
+- **Task Filtering:** Filter tasks by status (All, Active, Completed)
+- **Data Persistence:** All tasks persist across browser sessions
+- **Real-time Updates:** Task list updates immediately on all actions
+- **Error Handling:** User-friendly error messages for all operations
+
 ## Getting Started
 
 ### Prerequisites
