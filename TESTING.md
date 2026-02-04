@@ -71,3 +71,34 @@
 - All completion statuses persist correctly across page refreshes
 - Database correctly stores and retrieves completion status
 - Visual feedback (strikethrough) matches stored status
+
+---
+
+## US-004: Delete Task - Deletion Testing
+
+**Date:** [Date]
+**Tester:** [Your Name]
+
+### Test Environment
+- Frontend: http://localhost:5173
+- Backend: http://localhost:8000
+- Database: PostgreSQL 15
+
+### Test Results
+
+| Test Case | Status |
+|-----------|--------|
+| Delete incomplete task | ✓ |
+| Delete completed task | ✓ |
+| Delete last task shows empty state | ✓ |
+| Deletion maintains order of remaining tasks | ✓ |
+| Multiple deletions work correctly | ✓ |
+| Delete button visible on all tasks | ✓ |
+| Task removed immediately upon deletion | ✓ |
+| Deletion is permanent (no recovery) | ✓ |
+
+### Notes
+- All deletion scenarios work as expected
+- Task list updates immediately after deletion
+- Empty state displays correctly when last task deleted
+- Remaining tasks maintain correct order after deletion

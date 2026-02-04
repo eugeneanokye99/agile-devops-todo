@@ -3,7 +3,13 @@ import { test, expect } from '@playwright/test';
 test.describe('Sprint 1 Features', () => {
   test.beforeEach(async ({ page, request }) => {
     // Clear all tasks before each test to ensure test isolation
-    await request.delete('http://localhost:8000/api/tasks/test/clear');
+    const tasksResponse = await request.get('http://localhost:8000/api/tasks/');
+    if (tasksResponse.ok()) {
+      const tasks = await tasksResponse.json();
+      for (const task of tasks) {
+        await request.delete(`http://localhost:8000/api/tasks/${task.id}`);
+      }
+    }
     await page.goto('/');
   });
 
