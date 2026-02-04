@@ -167,7 +167,7 @@ As a user, I want to edit a task's title so that I can correct mistakes or updat
 
 ---
 
-### Week 1 - Mid-Sprint
+### Mid-Sprint
 
 **Completed Work:**
 - US-004 reviewed and verified against Definition of Done
@@ -199,7 +199,7 @@ As a user, I want to edit a task's title so that I can correct mistakes or updat
 
 ---
 
-### Week 2 - Late Sprint
+### Late Sprint
 
 **Completed Work:**
 - US-006 reviewed and verified against Definition of Done
