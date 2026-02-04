@@ -29,14 +29,21 @@ def create_task(task: TaskCreate, db: Session = Depends(get_db)):
 
 @router.patch("/{task_id}", response_model=TaskResponse)
 def update_task(task_id: int, task_update: TaskUpdate, db: Session = Depends(get_db)):
-    logger.info(f"Updating task {task_id}: completed={task_update.completed}")
+    logger.info(f"Updating task {task_id}")
     
     task = db.query(Task).filter(Task.id == task_id).first()
     if not task:
         logger.error(f"Task {task_id} not found")
         raise HTTPException(status_code=404, detail="Task not found")
     
-    task.completed = task_update.completed
+    if task_update.title is not None:
+        task.title = task_update.title
+        logger.info(f"Task {task_id} title updated to: {task_update.title}")
+    
+    if task_update.completed is not None:
+        task.completed = task_update.completed
+        logger.info(f"Task {task_id} completed status updated to: {task_update.completed}")
+    
     db.commit()
     db.refresh(task)
     

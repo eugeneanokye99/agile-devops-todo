@@ -13,7 +13,15 @@ class TaskCreate(BaseModel):
         return v.strip()
     
 class TaskUpdate(BaseModel):
-    completed: bool
+    title: Optional[str] = None
+    completed: Optional[bool] = None
+
+    @field_validator('title')
+    @classmethod
+    def title_must_not_be_empty(cls, v):
+        if v is not None and (not v or not v.strip()):
+            raise ValueError('Title cannot be empty or whitespace only')
+        return v.strip() if v else v
     
 class TaskResponse(BaseModel):
     id: int
