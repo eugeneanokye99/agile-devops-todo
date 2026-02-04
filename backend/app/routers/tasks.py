@@ -42,3 +42,12 @@ def update_task(task_id: int, task_update: TaskUpdate, db: Session = Depends(get
     
     logger.info(f"Task {task_id} updated successfully")
     return task
+
+@router.delete("/test/clear")
+def clear_all_tasks_for_testing(db: Session = Depends(get_db)):
+    """Clear all tasks - for automated testing purposes only."""
+    logger.warning("Clearing all tasks for testing")
+    db.query(Task).delete()
+    db.commit()
+    logger.info("All tasks cleared")
+    return {"message": "All tasks cleared"}

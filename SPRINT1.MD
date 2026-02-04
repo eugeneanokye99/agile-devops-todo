@@ -336,14 +336,6 @@ Based on the retrospective, here are concrete improvements to implement:
 
 ---
 
-### Action Item 3: Add API Response Time Logging
-**Problem:** No performance baseline established  
-**Solution:** Add middleware to log API response times  
-**Implementation:** Create FastAPI middleware to measure and log request duration  
-**Success Criteria:** All API endpoints log response times in milliseconds
-
----
-
 ### Action Item 4: Improve Task Breakdown Documentation
 **Problem:** Task granularity inconsistent  
 **Solution:** Document task breakdown in sprint planning with estimated time  
@@ -367,7 +359,6 @@ Based on Sprint 1 velocity (8 points) and identified improvements:
 - Add E2E testing framework and tests
 - Standardize error handling
 - Add API performance logging
-- Improve task breakdown documentation
 
 **Focus Areas:**
 - Complete remaining CRUD operations (Delete, Edit)
