@@ -194,3 +194,72 @@ h1 {
   color: white;
   border-color: #007bff;
 }
+
+.task-item.editing {
+  flex-direction: column;
+  gap: 8px;
+}
+
+.edit-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.edit-input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 100%;
+}
+
+.edit-input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.save-button {
+  padding: 6px 16px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.save-button:hover {
+  background-color: #218838;
+}
+
+.cancel-button {
+  padding: 6px 16px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.cancel-button:hover {
+  background-color: #5a6268;
+}
+
+.task-title {
+  cursor: pointer;
+  user-select: none;
+}
+
+.task-title:hover {
+  background-color: #f8f9fa;
+  padding: 2px 4px;
+  border-radius: 2px;
+}

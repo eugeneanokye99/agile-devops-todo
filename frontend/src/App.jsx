@@ -13,6 +13,7 @@ function App() {
   const [filter, setFilter] = useState(() => {
     return sessionStorage.getItem('taskFilter') || 'all';
   });
+  const [editingTaskId, setEditingTaskId] = useState(null);
   const { error, handleError, clearError } = useError();
 
   useEffect(() => {
@@ -50,7 +51,7 @@ function App() {
 
   async function handleToggleComplete(taskId, completed) {
     try {
-      const updatedTask = await updateTask(taskId, completed);
+      const updatedTask = await updateTask(taskId, { completed });
       setTasks(tasks.map((task) =>
         task.id === taskId ? updatedTask : task
       ));
@@ -68,6 +69,27 @@ function App() {
     } catch (err) {
       handleError(err, "Failed to delete task");
     }
+  }
+
+  async function handleEdit(taskId, newTitle) {
+    try {
+      const updatedTask = await updateTask(taskId, { title: newTitle });
+      setTasks(tasks.map((task) =>
+        task.id === taskId ? updatedTask : task
+      ));
+      setEditingTaskId(null);
+      clearError();
+    } catch (err) {
+      handleError(err, "Failed to update task");
+    }
+  }
+
+  function handleEditStart(taskId) {
+    setEditingTaskId(taskId);
+  }
+
+  function handleEditCancel() {
+    setEditingTaskId(null);
   }
 
   function getFilteredTasks() {
@@ -110,6 +132,10 @@ function App() {
         tasks={filteredTasks} 
         onToggleComplete={handleToggleComplete}
         onDelete={handleDelete}
+        onEdit={handleEdit}
+        editingTaskId={editingTaskId}
+        onEditStart={handleEditStart}
+        onEditCancel={handleEditCancel}
       />
     </div>
   );

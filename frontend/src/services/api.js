@@ -22,13 +22,13 @@ export async function createTask(title) {
   return response.json();
 }
 
-export async function updateTask(taskId, completed) {
+export async function updateTask(taskId, updates) {
   const response = await fetch(`${API_URL}/tasks/${taskId}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ completed }),
+    body: JSON.stringify(updates),
   });
   if (!response.ok) {
     throw new Error("Failed to update task");

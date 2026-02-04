@@ -11,10 +11,12 @@ A simple and intuitive Todo application that allows users to create, update, and
 
 ## Features
 
-- **Task Management:** Create, view, complete, and delete tasks
+- **Task Management:** Create, view, complete, edit, and delete tasks
+- **Inline Editing:** Double-click any task to edit its title in place
 - **Task Filtering:** Filter tasks by status (All, Active, Completed)
 - **Data Persistence:** All tasks persist across browser sessions
 - **Real-time Updates:** Task list updates immediately on all actions
+- **Keyboard Shortcuts:** Use Enter to save and Escape to cancel when editing
 - **Error Handling:** User-friendly error messages for all operations
 
 ## Getting Started
@@ -165,3 +167,69 @@ No response body
 }
 ```
 
+
+### PATCH /api/tasks/{id}
+
+Updates a task's completion status or title.
+
+**Path Parameters:**
+
+- `id` (integer): The ID of the task to update
+
+**Request Body (Update Completion Status):**
+
+```json
+{
+  "completed": true
+}
+```
+
+**Request Body (Update Title):**
+
+```json
+{
+  "title": "Updated task title"
+}
+```
+
+**Request Body (Update Both):**
+
+```json
+{
+  "title": "Updated task title",
+  "completed": true
+}
+```
+
+**Success Response (200 OK):**
+
+```json
+{
+  "id": 1,
+  "title": "Updated task title",
+  "completed": true,
+  "created_at": "2025-01-15T10:30:00Z"
+}
+```
+
+**Error Response (404 Not Found):**
+
+```json
+{
+  "detail": "Task not found"
+}
+```
+
+**Error Response (422 Unprocessable Entity - Empty Title):**
+
+```json
+{
+  "detail": [
+    {
+      "loc": ["body", "title"],
+      "msg": "Title cannot be empty or whitespace only",
+      "type": "value_error"
+    }
+  ]
+}
+```

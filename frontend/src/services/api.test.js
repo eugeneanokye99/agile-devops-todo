@@ -72,7 +72,7 @@ describe('API Service', () => {
   })
 
   describe('updateTask', () => {
-    it('updates task successfully', async () => {
+    it('updates task completion status', async () => {
       const mockTask = { id: 1, title: 'Task', completed: true }
 
       global.fetch = vi.fn(() =>
@@ -82,7 +82,7 @@ describe('API Service', () => {
         })
       )
 
-      const task = await updateTask(1, true)
+      const task = await updateTask(1, { completed: true })
 
       expect(fetch).toHaveBeenCalledWith('http://localhost:8000/api/tasks/1', {
         method: 'PATCH',
@@ -94,6 +94,28 @@ describe('API Service', () => {
       expect(task).toEqual(mockTask)
     })
 
+    it('updates task title', async () => {
+      const mockTask = { id: 1, title: 'Updated Task', completed: false }
+
+      global.fetch = vi.fn(() =>
+        Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve(mockTask)
+        })
+      )
+
+      const task = await updateTask(1, { title: 'Updated Task' })
+
+      expect(fetch).toHaveBeenCalledWith('http://localhost:8000/api/tasks/1', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ title: 'Updated Task' }),
+      })
+      expect(task).toEqual(mockTask)
+    })
+
     it('throws error when update fails', async () => {
       global.fetch = vi.fn(() =>
         Promise.resolve({
@@ -101,7 +123,7 @@ describe('API Service', () => {
         })
       )
 
-      await expect(updateTask(1, true)).rejects.toThrow('Failed to update task')
+      await expect(updateTask(1, { completed: true })).rejects.toThrow('Failed to update task')
     })
   })
 

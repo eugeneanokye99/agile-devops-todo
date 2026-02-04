@@ -1,6 +1,6 @@
 import TaskItem from "./TaskItem";
 
-function TaskList({ tasks, onToggleComplete, onDelete }) {
+function TaskList({ tasks, onToggleComplete, onDelete, onEdit, editingTaskId, onEditStart, onEditCancel }) {
   if (tasks.length === 0) {
     return <p className="empty-state">No tasks yet</p>;
   }
@@ -13,6 +13,10 @@ function TaskList({ tasks, onToggleComplete, onDelete }) {
           task={task}
           onToggleComplete={onToggleComplete}
           onDelete={onDelete}
+          onEdit={onEdit}
+          isEditing={editingTaskId === task.id}
+          onEditStart={onEditStart}
+          onEditCancel={onEditCancel}
         />
       ))}
     </ul>

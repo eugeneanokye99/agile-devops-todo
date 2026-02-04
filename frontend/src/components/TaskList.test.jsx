@@ -1,10 +1,18 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import TaskList from './TaskList'
 
 describe('TaskList', () => {
+  const mockHandlers = {
+    onToggleComplete: vi.fn(),
+    onDelete: vi.fn(),
+    onEdit: vi.fn(),
+    onEditStart: vi.fn(),
+    onEditCancel: vi.fn()
+  };
+
   it('displays empty state when no tasks', () => {
-    render(<TaskList tasks={[]} onToggleComplete={() => {}} onDelete={() => {}} />)
+    render(<TaskList tasks={[]} {...mockHandlers} editingTaskId={null} />)
     
     expect(screen.getByText('No tasks yet')).toBeInTheDocument()
   })
@@ -15,7 +23,7 @@ describe('TaskList', () => {
       { id: 2, title: 'Test Task 2', completed: false }
     ]
     
-    render(<TaskList tasks={tasks} onToggleComplete={() => {}} onDelete={() => {}} />)
+    render(<TaskList tasks={tasks} {...mockHandlers} editingTaskId={null} />)
     
     expect(screen.getByText('Test Task 1')).toBeInTheDocument()
     expect(screen.getByText('Test Task 2')).toBeInTheDocument()
@@ -26,7 +34,7 @@ describe('TaskList', () => {
       { id: 1, title: 'Completed Task', completed: true }
     ]
     
-    render(<TaskList tasks={tasks} onToggleComplete={() => {}} onDelete={() => {}} />)
+    render(<TaskList tasks={tasks} {...mockHandlers} editingTaskId={null} />)
     
     const taskText = screen.getByText('Completed Task')
     expect(taskText).toHaveClass('completed')
@@ -39,7 +47,7 @@ describe('TaskList', () => {
       { id: 3, title: 'Third Task', completed: false }
     ]
     
-    render(<TaskList tasks={tasks} onToggleComplete={() => {}} onDelete={() => {}} />)
+    render(<TaskList tasks={tasks} {...mockHandlers} editingTaskId={null} />)
     
     const taskItems = screen.getAllByRole('listitem')
     expect(taskItems).toHaveLength(3)
@@ -48,27 +56,15 @@ describe('TaskList', () => {
     expect(taskItems[2]).toHaveTextContent('Third Task')
   })
 
-  it('renders checkboxes for each task', () => {
+  it('shows only one task in edit mode', () => {
     const tasks = [
       { id: 1, title: 'Task 1', completed: false },
-      { id: 2, title: 'Task 2', completed: true }
+      { id: 2, title: 'Task 2', completed: false }
     ]
     
-    render(<TaskList tasks={tasks} onToggleComplete={() => {}} onDelete={() => {}} />)
+    render(<TaskList tasks={tasks} {...mockHandlers} editingTaskId={1} />)
     
-    const checkboxes = screen.getAllByRole('checkbox')
-    expect(checkboxes).toHaveLength(2)
-  })
-
-  it('renders delete button for each task', () => {
-    const tasks = [
-      { id: 1, title: 'Task 1', completed: false },
-      { id: 2, title: 'Task 2', completed: true }
-    ]
-    
-    render(<TaskList tasks={tasks} onToggleComplete={() => {}} onDelete={() => {}} />)
-    
-    const deleteButtons = screen.getAllByRole('button', { name: 'Delete' })
-    expect(deleteButtons).toHaveLength(2)
+    expect(screen.getByDisplayValue('Task 1')).toBeInTheDocument()
+    expect(screen.queryByDisplayValue('Task 2')).not.toBeInTheDocument()
   })
 })

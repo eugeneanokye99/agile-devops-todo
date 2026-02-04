@@ -216,3 +216,56 @@ def test_delete_maintains_order(client):
     assert len(tasks) == 2
     assert tasks[0]["title"] == "Task 1"
     assert tasks[1]["title"] == "Task 3"
+
+
+def test_update_task_title(client):
+    """Test updating task title"""
+    create_response = client.post("/api/tasks/", json={"title": "Original Title"})
+    task_id = create_response.json()["id"]
+    
+    response = client.patch(f"/api/tasks/{task_id}", json={"title": "Updated Title"})
+    
+    assert response.status_code == 200
+    assert response.json()["title"] == "Updated Title"
+
+def test_update_task_title_preserves_completion(client):
+    """Test updating title preserves completion status"""
+    create_response = client.post("/api/tasks/", json={"title": "Test Task"})
+    task_id = create_response.json()["id"]
+    
+    client.patch(f"/api/tasks/{task_id}", json={"completed": True})
+    response = client.patch(f"/api/tasks/{task_id}", json={"title": "New Title"})
+    
+    assert response.status_code == 200
+    assert response.json()["title"] == "New Title"
+    assert response.json()["completed"] == True
+
+def test_update_task_empty_title(client):
+    """Test updating task with empty title fails"""
+    create_response = client.post("/api/tasks/", json={"title": "Test Task"})
+    task_id = create_response.json()["id"]
+    
+    response = client.patch(f"/api/tasks/{task_id}", json={"title": ""})
+    
+    assert response.status_code == 422
+
+def test_update_task_whitespace_title(client):
+    """Test updating task with whitespace only title fails"""
+    create_response = client.post("/api/tasks/", json={"title": "Test Task"})
+    task_id = create_response.json()["id"]
+    
+    response = client.patch(f"/api/tasks/{task_id}", json={"title": "   "})
+    
+    assert response.status_code == 422
+
+def test_update_task_title_persists(client):
+    """Test updated title persists"""
+    create_response = client.post("/api/tasks/", json={"title": "Original"})
+    task_id = create_response.json()["id"]
+    
+    client.patch(f"/api/tasks/{task_id}", json={"title": "Updated"})
+    
+    response = client.get("/api/tasks/")
+    task = next(t for t in response.json() if t["id"] == task_id)
+    
+    assert task["title"] == "Updated"
